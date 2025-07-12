@@ -35,7 +35,9 @@ public class StandAloneTest {
         driver.findElement(By.id("userEmail")).sendKeys("rahulshetty123@yopmail.com");
         driver.findElement(By.id("userPassword")).sendKeys("Password123!");
         driver.findElement(By.id("login")).click();
-        if (driver.findElement(By.id("res")).isDisplayed()){
+//        if (driver.findElement(By.id("res")).isDisplayed()){
+        if (driver.findElement(By.id("toast-container")).isDisplayed()){
+
             Assert.assertTrue(true);
         };
 
