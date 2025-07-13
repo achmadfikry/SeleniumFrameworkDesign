@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
@@ -41,15 +44,22 @@ public class StandAloneTest {
         if (driver.findElement(By.id("toast-container")).isDisplayed()){
             Assert.assertTrue(true);
         };
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
 
         List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
 //        products.stream().filter(product->product.getText().equals("ZARA COAT 3")); // it's not finish yet because we have to travel untill we find the right element
         WebElement selectedProduct = products.stream().filter(product->product.findElement(By.cssSelector("b")).getText().equals("ZARA COAT 3")).findFirst().orElse(null);
         selectedProduct.findElement(By.cssSelector(".card-body button:last-of-type")).click();
+
         if (driver.findElement(By.id("toast-container")).isDisplayed()){
             Assert.assertTrue(true);
         };
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
+        //ng-animating
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
 
+        driver.findElement(By.cssSelector("[routerlink*=cart]")).click();
 
 
 
