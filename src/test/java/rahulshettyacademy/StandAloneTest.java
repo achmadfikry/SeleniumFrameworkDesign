@@ -18,6 +18,7 @@ public class StandAloneTest {
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
+        String productName = "ZARA COAT 3";
         driver.get("https://rahulshettyacademy.com/client");
 //        driver.findElement(By.xpath("//a[text()='Register here']")).click();
 //        driver.findElement(By.id("firstName")).sendKeys("Rahul");
@@ -49,7 +50,7 @@ public class StandAloneTest {
 
         List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
 //        products.stream().filter(product->product.getText().equals("ZARA COAT 3")); // it's not finish yet because we have to travel untill we find the right element
-        WebElement selectedProduct = products.stream().filter(product->product.findElement(By.cssSelector("b")).getText().equals("ZARA COAT 3")).findFirst().orElse(null);
+        WebElement selectedProduct = products.stream().filter(product->product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
         selectedProduct.findElement(By.cssSelector(".card-body button:last-of-type")).click();
 
         if (driver.findElement(By.id("toast-container")).isDisplayed()){
@@ -61,6 +62,11 @@ public class StandAloneTest {
 
         driver.findElement(By.cssSelector("[routerlink*=cart]")).click();
 
+        //css selector: .cartSection h3 -> parent to child
+        //xpath: //*[@class='cartSection']/h3 -> parent to child
+        List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartSection h3"));
+        Boolean match = cartProducts.stream().anyMatch(cartProduct->cartProduct.getText().equalsIgnoreCase(productName));
+        Assert.assertTrue(match);
 
 
     }
