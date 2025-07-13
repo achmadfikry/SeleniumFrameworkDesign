@@ -39,13 +39,17 @@ public class StandAloneTest {
         driver.findElement(By.id("login")).click();
 //        if (driver.findElement(By.id("res")).isDisplayed()){
         if (driver.findElement(By.id("toast-container")).isDisplayed()){
-
             Assert.assertTrue(true);
         };
 
         List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
 //        products.stream().filter(product->product.getText().equals("ZARA COAT 3")); // it's not finish yet because we have to travel untill we find the right element
         WebElement selectedProduct = products.stream().filter(product->product.findElement(By.cssSelector("b")).getText().equals("ZARA COAT 3")).findFirst().orElse(null);
+        selectedProduct.findElement(By.cssSelector(".card-body button:last-of-type")).click();
+        if (driver.findElement(By.id("toast-container")).isDisplayed()){
+            Assert.assertTrue(true);
+        };
+
 
 
 
